@@ -94,8 +94,15 @@ function deselectButton3()
 	snare_trigger:Push(0)
 end
 
+data_x = 0;
 function accel(region, x, y, z)
-	DPrint(x) --rotation
+	--DPrint(x) --rotation
+	data_x = x
+end
+
+function selectButton4()
+	--SendOSCMessage(host,8888,"/urMus/numbers",math.random(220,1000),math.random(220,1000))
+	DPrint(data_x)
 end
 
 function createButtons()
@@ -148,5 +155,19 @@ function createButtons()
 	r3:Handle("OnTouchUp", deselectButton3)
 	r3:EnableInput(true)
 	r3:Show()
+	
+	r4 = Region()
+	r4:SetWidth(ScreenWidth()/2)
+	r4:SetHeight(ScreenHeight()/4)
+	r4:SetAnchor("TOPLEFT",UIParent,"TOPLEFT",ScreenWidth()/2,0)
+	r4.t = r4:Texture(0,0,255,255)
+	r4.tb = r4:TextLabel()
+	r4.tb:SetLabel("send X")
+	r4.tb:SetColor(0,255,0,255)
+	r4.tb:SetFontHeight(20)
+	r4:Handle("OnTouchDown", selectButton4)
+	r4:Handle("OnTouchUp", deselectButton4)
+	r4:EnableInput(true)
+	r4:Show()
 end
 main()
